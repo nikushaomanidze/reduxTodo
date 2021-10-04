@@ -1,28 +1,16 @@
-import {
-  GET_BOOKS,
-  ADD_TO_BOOKMARK_LIST,
-  REMOVE_FROM_BOOKMARK_LIST
-} from './actions';
+import { ADD_TODO, REMOVE_TODO } from "./actions";
 
-const initialState = {
-  books: [],
-  bookmarks: []
-};
+const initialState = [];
 
-function booksReducer(state = initialState, action) {
+function TodoReducer(state = initialState, action) {
   switch (action.type) {
-    case GET_BOOKS:
-      return { ...state, books: action.payload };
-    case ADD_TO_BOOKMARK_LIST:
-      return { ...state, bookmarks: [...state.bookmarks, action.payload] };
-    case REMOVE_FROM_BOOKMARK_LIST:
-      return {
-        ...state,
-        bookmarks: state.bookmarks.filter(book => book.id !== action.payload.id)
-      };
+    case ADD_TODO:
+      return [...state, { title: action.title, id: action.id }];
+    case REMOVE_TODO:
+      return state.filter((todo) => todo.id !== action.id);
     default:
       return state;
   }
 }
 
-export default booksReducer;
+export default TodoReducer;

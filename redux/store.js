@@ -1,19 +1,15 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { persistStore, persistReducer } from 'redux-persist';
+import { createStore, combineReducers } from "redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { persistStore, persistReducer } from "redux-persist";
 
-import booksReducer from './reducers';
+import TodoReducer from "./reducers";
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage: AsyncStorage,
-  whitelist: ['bookmarks']
 };
 
-const rootReducer = combineReducers({
-  booksReducer: persistReducer(persistConfig, booksReducer)
-});
+const rootReducer = persistReducer(persistConfig, TodoReducer);
 
-export const store = createStore(rootReducer, applyMiddleware(thunk));
+export const store = createStore(rootReducer);
 export const persistor = persistStore(store);
