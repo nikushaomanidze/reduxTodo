@@ -16,17 +16,18 @@ export default function AddTodo() {
   const state = useSelector((state) => state);
   console.log(state);
 
-  const AddList = (id, title) => {
-    dispatch({ type: "ADD_TODO", title: title, id: id });
+  //დამატება
+  const AddList = (title) => {
+    dispatch({ type: "ADD_TODO", payload: title });
     setTitle("");
   };
+  //ამოშლა
   const DeleteList = (id) => {
-    dispatch({ type: "REMOVE_TODO", id });
+    dispatch({ type: "REMOVE_TODO", payload: id });
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* <Text>hello</Text> */}
       <TextInput
         style={styles.textInput}
         placeholder="please add players name"
@@ -35,33 +36,41 @@ export default function AddTodo() {
         autoCorrect={false}
         value={title}
         onChangeText={(text) => setTitle(text)}
-        onEndEditing={() => AddList(Math.random() * 999, title)}
+        onEndEditing={() => AddList(title)}
       />
-      <FlatList
-        data={state}
-        keyExtractor={(item) => `${item.id}`}
-        renderItem={({ item }) => (
-          <View style={styles.ViewStyle}>
-            <Text style={{ fontSize: 20 }}>{item.title}</Text>
-            <TouchableOpacity onPress={(item) => DeleteList(item.id)}>
-              <Text style={{ fontSize: 50 }}>-</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      />
-      <TouchableOpacity
-        style={{
-          backgroundColor: "red",
-          width: "100%",
-          height: 70,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Text style={{ fontSize: 30, letterSpacing: 3, fontWeight: "bold" }}>
-          next
-        </Text>
-      </TouchableOpacity>
+      {state.teamList.length === 0 ? (
+        <View style={{ backgroundColor: "blue" }}>
+          <Text style={{ fontSize: 20 }}>
+            click textInput and add teams name
+          </Text>
+        </View>
+      ) : (
+        <FlatList
+          data={state.teamList}
+          keyExtractor={(item) => `${item.id}`}
+          renderItem={({ item }) => (
+            <View style={styles.ViewStyle}>
+              <Text style={{ fontSize: 20 }}>{item.title}</Text>
+              <TouchableOpacity onPress={() => DeleteList(item.id)}>
+                <Text style={{ fontSize: 50 }}>-</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        />
+      )}
+      {state.teamList.length < 2 ? (
+        <TouchableOpacity style={styles.TouchableStyle1}>
+          <Text style={{ fontSize: 30, letterSpacing: 3, fontWeight: "bold" }}>
+            next
+          </Text>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity style={styles.TouchableStyle2}>
+          <Text style={{ fontSize: 30, letterSpacing: 3, fontWeight: "bold" }}>
+            next
+          </Text>
+        </TouchableOpacity>
+      )}
     </SafeAreaView>
   );
 }
@@ -71,6 +80,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
     backgroundColor: "green",
+    justifyContent: "space-between",
   },
   textInput: {
     marginTop: 30,
@@ -88,8 +98,24 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     backgroundColor: "red",
     marginVertical: 20,
-    width: 300,
+    width: 340,
     height: 60,
     borderRadius: 10,
+  },
+  TouchableStyle1: {
+    opacity: 0.5,
+    backgroundColor: "red",
+    width: "100%",
+    height: 70,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  TouchableStyle2: {
+    opacity: 1,
+    backgroundColor: "red",
+    width: "100%",
+    height: 70,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

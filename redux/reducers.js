@@ -1,13 +1,22 @@
 import { ADD_TODO, REMOVE_TODO } from "./actions";
 
-const initialState = [];
+const initialState = { teamList: [] };
 
 function TodoReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_TODO:
-      return [...state, { title: action.title, id: action.id }];
+      return {
+        ...state,
+        teamList: state.teamList.concat({
+          id: Math.random(),
+          title: action.payload,
+        }),
+      };
     case REMOVE_TODO:
-      return state.filter((todo) => todo.id !== action.id);
+      return {
+        ...state,
+        teamList: state.teamList.filter((item) => item.id !== action.payload),
+      };
     default:
       return state;
   }
