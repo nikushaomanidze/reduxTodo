@@ -7,6 +7,8 @@ import { store, persistor } from "./redux/store";
 
 export default function App() {
   return (
+
+    //hello everyone 
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <AddTodo />
