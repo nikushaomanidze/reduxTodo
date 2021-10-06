@@ -15,12 +15,14 @@ export default function AddTodo() {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
   // console.log(state);
+
+
   const AddList = (title) => { 
     if (title.length > 4)
-    {dispatch({ type: "ADD_TODO", payload: title });
-    setTitle("")}
-  };
-
+     dispatch({ type: "ADD_TODO", payload: title });
+    setTitle("")
+    }
+    
   const DeleteList = (id) => {
     dispatch({ type: "REMOVE_TODO", payload: id });
   };

@@ -19,31 +19,3 @@ export default function App() {
 }
 
 
-// import React, { useState, useEffect } from 'react'
-// import { Text, View } from 'react-native'
-
-// export default App = () => {
-
-//   const [secs, setSecs] = useState(400)
-
-
-//   useEffect(() => {
-//     const timerId = setInterval(() => {
-//       if (secs <= 0) {
-//         alert('times up')
-//       }
-//       else setSecs(s => s - 1)
-//     }, 1000)
-//     return () => clearInterval(timerId);
-//   }, [secs])
-
-
-//   return (
-//     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-//       <Text style={{ fontSize: 40 }}>
-//         {secs < 10 && 0}{secs}
-//       </Text>
-
-//     </View>
-//   )
-// }
