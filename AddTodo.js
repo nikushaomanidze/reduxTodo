@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   Text,
   View,
@@ -14,30 +14,34 @@ export default function AddTodo() {
   const [title, setTitle] = useState("");
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
-  console.log(state);
-
-  //დამატება
-  const AddList = (title) => {
-    dispatch({ type: "ADD_TODO", payload: title });
-    setTitle("");
+  // console.log(state);
+  const AddList = (title) => { 
+    if (title.length > 4)
+    {dispatch({ type: "ADD_TODO", payload: title });
+    setTitle("")}
   };
-  //ამოშლა
+
   const DeleteList = (id) => {
     dispatch({ type: "REMOVE_TODO", payload: id });
   };
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* ტექსტის შეყვანა */}
       <TextInput
         style={styles.textInput}
-        placeholder="please add players name"
+        style={[{  borderColor:  title.length  > 4 ||   title.length === 0 ? 'white' : 'red' }, styles.textInput]}
+        placeholder="add min 5 letters..."
         placeholderTextColor="#6E7FAA"
         autoCapitalize="none"
         autoCorrect={false}
         value={title}
         onChangeText={(text) => setTitle(text)}
         onEndEditing={() => AddList(title)}
+        minLength={5}
       />
+
+    {/* აითემების გამოტანა */}
       {state.teamList.length === 0 ? (
         <View style={{ backgroundColor: "blue" }}>
           <Text style={{ fontSize: 20 }}>
@@ -58,6 +62,8 @@ export default function AddTodo() {
           )}
         />
       )}
+
+      {/* ნავიგაციის ღილაკი */}
       {state.teamList.length < 2 ? (
         <TouchableOpacity style={styles.TouchableStyle1}>
           <Text style={{ fontSize: 30, letterSpacing: 3, fontWeight: "bold" }}>
@@ -90,6 +96,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 10,
     fontSize: 20,
+    borderWidth:2,
   },
   ViewStyle: {
     paddingHorizontal: 20,
